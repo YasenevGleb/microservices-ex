@@ -1,4 +1,4 @@
-package com.mymicroservices.fraud;
+package com.mymicroservices.notification;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -11,19 +11,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
-public class FraudCheckHistory {
+@Builder
+public class Notification {
     @Id
-    @SequenceGenerator(name = "fraud_id_sequence",
-        sequenceName = "fraud_id_sequence"
-    )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fraud_id_sequence")
+    @SequenceGenerator(sequenceName = "notification_id", name = "notification_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notification_id")
     private Integer id;
-    private Integer customerId;
-    private Boolean isFraudster;
+    private String notificationMessage;
+    private Integer toCustomerId;
+    private String toCustomerEmail;
+    private String sender;
     private LocalDateTime createdAt;
 }
