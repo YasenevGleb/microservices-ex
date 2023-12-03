@@ -38,6 +38,15 @@
       <artifactId>spring-cloud-sleuth-zipkin</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.microservices</groupId>
+      <artifactId>amqp</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>com.microservices</groupId>
       <artifactId>client</artifactId>
       <version>0.0.1-SNAPSHOT</version>

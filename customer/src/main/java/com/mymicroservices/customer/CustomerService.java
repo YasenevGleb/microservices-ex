@@ -1,5 +1,6 @@
 package com.mymicroservices.customer;
 
+import com.mymicroservices.ampq.RabbitMQMessageProducer;
 import com.mymicroservices.clients.fraud.FraudCheckResponse;
 import com.mymicroservices.clients.fraud.FraudClient;
 import com.mymicroservices.clients.notification.NotificationClient;
@@ -10,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public record CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate,
-                              FraudClient fraudClient, NotificationClient notificationClient) {
+                              FraudClient fraudClient, RabbitMQMessageProducer producer) {
     public void registerCustomer(CustomerRequest request) {
         Customer customer = Customer.builder()
             .firstName(request.firstName())
@@ -22,8 +23,9 @@ public record CustomerService(CustomerRepository customerRepository, RestTemplat
         if (response.isFraudster()) {
             throw new InternalException("fraudster");
         }
-        notificationClient.sendNotification(
+        NotificationRequest notificationRequest =
             new NotificationRequest("Test notification", customer.getEmail(), customer.getLastName(),
-                customer.getId()));
+                customer.getId());
+        producer.publish(notificationRequest, "internal.exchange", "internal.notification.routing-key");
     }
 }

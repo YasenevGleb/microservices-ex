@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(scanBasePackages = {
     "com.mymicroservices.customer",
+    "com.mymicroservices.ampq",
 })
 @EnableEurekaClient
 @EnableFeignClients(basePackages = "com.mymicroservices.clients")
